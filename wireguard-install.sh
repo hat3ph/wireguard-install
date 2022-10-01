@@ -355,9 +355,10 @@ if [[ ! -e /etc/wireguard/wg0.conf ]]; then
 	fi
 	echo
 	echo "Which network range should WireGuard use?"
-    read -rp "Network Range [10.7.0.0]: " network_range
-	until [[ -z "$network_range" || "$network_range" =~ ^(([1-9]?[0-9]|1[0-9][0-9]|2([0-4][0-9]|5[0-5]))\.){3}([1-9]?[0-9]|1[0-9][0-9]|2([0-4][0-9]|5[0-5]))$ && ${network_range: -1} -eq 0 ]]; do
-		echo "$network_range: invalid network range or format."
+        read -rp "Network Range [10.7.0.0]: " network_range
+	#until [[ -z "$network_range" || "$network_range" =~ ^(([1-9]?[0-9]|1[0-9][0-9]|2([0-4][0-9]|5[0-5]))\.){3}([1-9]?[0-9]|1[0-9][0-9]|2([0-4][0-9]|5[0-5]))$ && ${network_range: -1} -eq 0 ]]; do
+	until [[ -z "$network_range" || "$network_range" =~ (^192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])$)|(^172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])$)|(^10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])$) && ${network_range: -1} -eq 0 ]]; do
+		echo "$network_range: invalid private network range or format."
 		read -rp "Network Range [10.7.0.0]: " network_range
 	done
 	[[ -z "$network_range" ]] && network_range="10.7.0.0"
